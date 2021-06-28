@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="#1e1e1e"
+    android:layout_height="match_parent"
+    tools:context=".AddExpense">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:layout_editor_absoluteX="22dp"
+        tools:layout_editor_absoluteY="37dp"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginBottom="200dp">
+
+        <Spinner
+            android:id="@+id/CategoryListLayout"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginLeft="4dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="6dp"
+            android:background="@color/white"
+            android:spinnerMode="dropdown"
+            android:theme="@style/ThemeOverlay.AppCompat.Light" />
+
+        <RelativeLayout
+            android:id="@+id/DateLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/CategoryListLayout"
+            android:layout_marginLeft="6dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="10dp">
+
+            <ImageButton
+                android:id="@+id/slect_date_button"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:background="@color/deeppurple"
+                android:padding="3dp"
+                android:src="@drawable/ic_text_calender"
+                app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/Date_text"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_toRightOf="@id/slect_date_button"
+                android:background="@color/white"
+                android:hint="Date"
+                android:paddingLeft="10dp"
+
+                android:textAlignment="gravity"
+                android:textSize="20dp" />
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="@id/CategoryListLayout">
+
+
+            <EditText
+                android:id="@+id/edText1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:background="@color/white"
+                android:ems="10"
+                android:inputType="numberDecimal"
+                android:textAlignment="textEnd"
+                android:textSize="24sp" />
+
+        </RelativeLayout>
+        <Button
+            android:id="@+id/btnsubmit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/deeppurple"
+            android:text="Add Expense"
+            android:textColor="@android:color/background_light"
+            android:textSize="18sp" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
