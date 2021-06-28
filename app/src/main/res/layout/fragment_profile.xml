@@ -8,6 +8,7 @@
     android:layout_marginTop="30dp"
     app:layout_goneMarginBottom="30dp"
     android:elevation="3dp"
+    android:background="#1e1e1e"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ProfileFragment">
 
@@ -16,6 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginTop="32dp"
+        android:background="#1e1e1e"
         android:layout_marginEnd="16dp"
         android:scrollbars="horizontal|vertical"
         app:cardCornerRadius="10dp"
@@ -28,7 +30,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#1e1e1e"
+        >
         <LinearLayout
             android:id="@+id/LayoutSignUpHeader"
             android:layout_width="match_parent"
@@ -48,7 +52,7 @@
                 android:background="@drawable/circle"
                 android:padding="10dp"
                 android:src="@drawable/passswodimg"
-                android:tint="@color/white" />
+                app:tint="@color/white" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -68,7 +72,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
             android:layout_marginBottom="15dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
@@ -98,8 +102,8 @@
             android:hint="@string/retype_password"
             android:importantForAutofill="no"
             android:inputType="textPassword"
-            android:textColor="@color/textColor"
-            android:background="@color/EditTexBg"
+            android:textColor="@color/black"
+            android:background="@color/white"
             android:fontFamily="sans-serif-condensed-medium"
             android:textSize="18dp"
             android:textColorHint="@color/textColorHint"
@@ -117,8 +121,8 @@
             android:hint="@string/email"
             android:importantForAutofill="no"
             android:inputType="textEmailAddress"
-            android:textColor="@color/textColor"
-            android:background="@color/EditTexBg"
+            android:textColor="@color/black"
+            android:background="@color/white"
             android:fontFamily="sans-serif-condensed-medium"
             android:textSize="18dp"
             android:textColorHint="@color/textColorHint"
@@ -137,8 +141,8 @@
             android:hint="@string/phone"
             android:importantForAutofill="no"
             android:inputType="phone"
-            android:textColor="@color/textColor"
-            android:background="@color/EditTexBg"
+            android:textColor="@color/black"
+            android:background="@color/white"
             android:fontFamily="sans-serif-condensed-medium"
             android:textSize="18dp"
             android:textColorHint="@color/textColorHint"
@@ -157,8 +161,8 @@
             android:hint="@string/username"
             android:importantForAutofill="no"
             android:inputType="textPersonName"
-            android:textColor="@color/textColor"
-            android:background="@color/EditTexBg"
+            android:textColor="@color/black"
+            android:background="@color/white"
             android:fontFamily="sans-serif-condensed-medium"
             android:textSize="18dp"
             android:textColorHint="@color/textColorHint"
@@ -177,17 +181,14 @@
             android:hint="@string/SignUppassword"
             android:importantForAutofill="no"
             android:inputType="textPassword"
-            android:textColor="@color/textColor"
-            android:background="@color/EditTexBg"
+            android:textColor="@color/black"
+            android:background="@color/white"
             android:fontFamily="sans-serif-condensed-medium"
             android:textSize="18dp"
             android:textColorHint="@color/textColorHint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/et_update_Username" />
-
-
-
     </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 

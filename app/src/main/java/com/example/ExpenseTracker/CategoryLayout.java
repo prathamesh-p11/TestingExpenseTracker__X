@@ -50,9 +50,9 @@ public class CategoryLayout extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         recyclerView.setAdapter(new CategoryItemRecyclerViewAdapter(categories_list));
 
-        Button button_add = view.findViewById(R.id.button_add_item);
-        Button button_remove = view.findViewById(R.id.button_remove_item);
-        button_add.setOnClickListener(new View.OnClickListener() {
+        Button btn_add = view.findViewById(R.id.button_add_item);
+        Button btn_remove = view.findViewById(R.id.button_remove_item);
+        btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AddCategory fragment =new AddCategory();
@@ -63,7 +63,7 @@ public class CategoryLayout extends Fragment {
             }
         });
 
-        button_remove.setOnClickListener(new View.OnClickListener() {
+        btn_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 RemoveCategory fragment = new RemoveCategory();

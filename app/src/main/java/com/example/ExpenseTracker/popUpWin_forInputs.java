@@ -21,9 +21,9 @@ public class popUpWin_forInputs extends DialogFragment {
 
     DatabaseHelper databaseHelper;
 
-    EditText editTextAnnualIncome;
-    EditText editTextAnnualSavings;
-    EditText editTextMaxDailyExpense;
+    EditText txt_AnnualIncome;
+    EditText txt_AnnualSavings;
+    EditText txt_MaxDailyExpense;
     Double AnnualIncome,DesiredAnnualSavings,MaxDailyExpenseLimit;
     int userId;
     boolean isEditingGoals=false;
@@ -31,16 +31,15 @@ public class popUpWin_forInputs extends DialogFragment {
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        //  super.onCreateDialog(savedInstanceState);
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        // Get the layout inflater
+
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         final View view=inflater.inflate(R.layout.dialog_window_for_inputs,null);
         final Bundle bundle=getArguments();
         databaseHelper=new DatabaseHelper(getContext());
-        editTextAnnualIncome=view.findViewById(R.id.et_annual_income);
-        editTextAnnualSavings=view.findViewById(R.id.et_desired_annual_savings);
-        editTextMaxDailyExpense=view.findViewById(R.id.et_max_daily_expense);
+        txt_AnnualIncome=view.findViewById(R.id.et_annual_income);
+        txt_AnnualSavings=view.findViewById(R.id.et_desired_annual_savings);
+        txt_MaxDailyExpense=view.findViewById(R.id.et_max_daily_expense);
 
 
         Cursor goals=databaseHelper.getUserGoals(databaseHelper.getActiveUserId());
@@ -49,63 +48,55 @@ public class popUpWin_forInputs extends DialogFragment {
             String AnnualIncome = goals.getString(goals.getColumnIndex("annual_income"));
             String DesiredAnnualSavings=goals.getString(goals.getColumnIndex("desired_savings_for_year"));
             String max_daily_expense = goals.getString(goals.getColumnIndex("max_daily_expense"));
-            editTextAnnualIncome.setText(String.valueOf(Math.round(Double.parseDouble(AnnualIncome))));
-            editTextAnnualSavings.setText(String.valueOf(Math.round(Double.parseDouble(DesiredAnnualSavings))));
-            editTextMaxDailyExpense.setText(String.valueOf(Math.round(Double.parseDouble(max_daily_expense))));
+            txt_AnnualIncome.setText(String.valueOf(Math.round(Double.parseDouble(AnnualIncome))));
+            txt_AnnualSavings.setText(String.valueOf(Math.round(Double.parseDouble(DesiredAnnualSavings))));
+            txt_MaxDailyExpense.setText(String.valueOf(Math.round(Double.parseDouble(max_daily_expense))));
             isEditingGoals=true;
 
         }
         goals.close();
-        // Inflate and set the layout for the dialog
-        // Pass null as the parent view because its going in the dialog layout
         builder.setView(view);
 
 
-        editTextAnnualSavings.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        txt_AnnualSavings.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if(!hasFocus)
                 {
-                    if( editTextAnnualIncome.getText().length()>0 && editTextMaxDailyExpense.getText().length()>0 ) {
-                        AnnualIncome = Double.parseDouble(editTextAnnualIncome.getText().toString());
-                        DesiredAnnualSavings = Double.parseDouble(editTextAnnualSavings.getText().toString());
-                        MaxDailyExpenseLimit=Double.parseDouble(editTextMaxDailyExpense.getText().toString());
+                    if( txt_AnnualIncome.getText().length()>0 && txt_MaxDailyExpense.getText().length()>0 ) {
+                        AnnualIncome = Double.parseDouble(txt_AnnualIncome.getText().toString());
+                        DesiredAnnualSavings = Double.parseDouble(txt_AnnualSavings.getText().toString());
+                        MaxDailyExpenseLimit=Double.parseDouble(txt_MaxDailyExpense.getText().toString());
                         if(MaxDailyExpenseLimit!=Math.round((AnnualIncome - DesiredAnnualSavings) / 365))
                         {
-                            editTextMaxDailyExpense.setText(String.valueOf(Math.round((AnnualIncome - DesiredAnnualSavings) / 365)));
-
-
+                            txt_MaxDailyExpense.setText(String.valueOf(Math.round((AnnualIncome - DesiredAnnualSavings) / 365)));
                         }
                     }
                 }
             }
         });
-        editTextMaxDailyExpense.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        txt_MaxDailyExpense.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus && editTextAnnualIncome.getText().length()>0 && editTextAnnualSavings.getText().length()>0)
+                if(!hasFocus && txt_AnnualIncome.getText().length()>0 && txt_AnnualSavings.getText().length()>0)
                 {
-                    AnnualIncome=Double.parseDouble(editTextAnnualIncome.getText().toString());
-                    DesiredAnnualSavings= Double.parseDouble(editTextAnnualSavings.getText().toString());
-                    MaxDailyExpenseLimit=Double.parseDouble(editTextMaxDailyExpense.getText().toString());
-                    if(Double.parseDouble(editTextMaxDailyExpense.getText().toString())>Math.round((Double.parseDouble(editTextAnnualIncome.getText().toString()) - Double.parseDouble(editTextAnnualSavings.getText().toString())) / 365))
+                    AnnualIncome=Double.parseDouble(txt_AnnualIncome.getText().toString());
+                    DesiredAnnualSavings= Double.parseDouble(txt_AnnualSavings.getText().toString());
+                    MaxDailyExpenseLimit=Double.parseDouble(txt_MaxDailyExpense.getText().toString());
+                    if(Double.parseDouble(txt_MaxDailyExpense.getText().toString())>Math.round((Double.parseDouble(txt_AnnualIncome.getText().toString()) - Double.parseDouble(txt_AnnualSavings.getText().toString())) / 365))
                     {
-                       // editTextMaxDailyExpense.setText(String.valueOf(Math.round((AnnualIncome - DesiredAnnualSavings) / 365)));
-                        editTextMaxDailyExpense.setError("Expenses seems to be more.Your savings will be reduced to"+String.valueOf(Math.round((Double.parseDouble(editTextAnnualIncome.getText().toString()) -Double.parseDouble(editTextAnnualSavings.getText().toString()) ) / 365)));
+                        txt_MaxDailyExpense.setError("Expenses seems to be more.Your savings will be reduced to"+String.valueOf(Math.round((Double.parseDouble(txt_AnnualIncome.getText().toString()) -Double.parseDouble(txt_AnnualSavings.getText().toString()) ) / 365)));
                        Toast.makeText(getContext(),"Maximum expense must tally with Income and Savings!",Toast.LENGTH_SHORT);
 
                     }
-                    else if(Double.parseDouble(editTextMaxDailyExpense.getText().toString())<Math.round((Double.parseDouble(editTextAnnualIncome.getText().toString()) - Double.parseDouble(editTextAnnualSavings.getText().toString())) / 365))
+                    else if(Double.parseDouble(txt_MaxDailyExpense.getText().toString())<Math.round((Double.parseDouble(txt_AnnualIncome.getText().toString()) - Double.parseDouble(txt_AnnualSavings.getText().toString())) / 365))
                     {
-                        Double Savings=(Double.parseDouble(editTextAnnualIncome.getText().toString())-(Double.parseDouble(editTextMaxDailyExpense.getText().toString()) *365));
-                        editTextAnnualSavings.setError("You can save to up "+Savings+".To set the goal edit savings or expenses");
+                        Double Savings=(Double.parseDouble(txt_AnnualIncome.getText().toString())-(Double.parseDouble(txt_MaxDailyExpense.getText().toString()) *365));
+                        txt_AnnualSavings.setError("You can save to up "+Savings+".To set the goal edit savings or expenses");
                     }
                     else
                     {
-
                     }
-
-
                 }
             }
         });
@@ -113,9 +104,9 @@ public class popUpWin_forInputs extends DialogFragment {
             builder .setPositiveButton("Save", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int id) {
-                        AnnualIncome=Double.parseDouble(editTextAnnualIncome.getText().toString());
-                        DesiredAnnualSavings= Double.parseDouble(editTextAnnualSavings.getText().toString());
-                        MaxDailyExpenseLimit=Double.parseDouble(editTextMaxDailyExpense.getText().toString());
+                        AnnualIncome=Double.parseDouble(txt_AnnualIncome.getText().toString());
+                        DesiredAnnualSavings= Double.parseDouble(txt_AnnualSavings.getText().toString());
+                        MaxDailyExpenseLimit=Double.parseDouble(txt_MaxDailyExpense.getText().toString());
 
                        // username=bundle.getString("username");
                         userId=databaseHelper.getActiveUserId();
@@ -160,9 +151,6 @@ public class popUpWin_forInputs extends DialogFragment {
 
 
                         }
-
-
-                        //
                     }
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {

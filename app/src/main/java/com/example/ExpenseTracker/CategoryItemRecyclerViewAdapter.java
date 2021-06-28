@@ -12,10 +12,6 @@ import com.example.ExpenseTracker.dummy.DummyContent.DummyItem;
 
 import java.util.ArrayList;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class CategoryItemRecyclerViewAdapter extends RecyclerView.Adapter<CategoryItemRecyclerViewAdapter.ViewHolder> {
 
     private ArrayList<String> categories_list = new ArrayList<>();
@@ -46,7 +42,6 @@ public class CategoryItemRecyclerViewAdapter extends RecyclerView.Adapter<Catego
         public final View mView;
         public final ImageView mIdView;
         public final TextView mContentView;
-        public DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);

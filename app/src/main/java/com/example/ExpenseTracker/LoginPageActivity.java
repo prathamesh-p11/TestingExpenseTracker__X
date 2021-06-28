@@ -13,8 +13,8 @@ import android.widget.Toast;
 
 public class LoginPageActivity extends AppCompatActivity {
     Context context;
-    Button SignupBtn,loginbutton;
-    EditText txtboxUsername,txtBoxpass;
+    Button btn_SignUp,btn_Login;
+    EditText txt_Username,txt_Password;
     Toast t;
     DatabaseHelper databaseHelper;
 
@@ -23,27 +23,26 @@ public class LoginPageActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login_page);
         context=getApplicationContext();
-        loginbutton= findViewById(R.id.btnLogin);
-        txtboxUsername=findViewById(R.id.txtUsername);
-        txtBoxpass=findViewById(R.id.txtPassword);
-        SignupBtn=findViewById(R.id.btnSignup);
+        btn_Login= findViewById(R.id.btnLogin);
+        txt_Username=findViewById(R.id.txtUsername);
+        txt_Password=findViewById(R.id.txtPassword);
+        btn_SignUp=findViewById(R.id.btnSignup);
         databaseHelper = new DatabaseHelper(this);
         Cursor UsernameNPassword= databaseHelper.getUserNameNPassword();
 
         if(UsernameNPassword.getCount()>0)
         {
             UsernameNPassword.moveToFirst();
-            txtboxUsername.setText(UsernameNPassword.getString(1));//username
-            txtBoxpass.setText(UsernameNPassword.getString(2));//password
+            txt_Username.setText(UsernameNPassword.getString(1));//username
+            txt_Password.setText(UsernameNPassword.getString(2));//password
             UsernameNPassword.close();
         }
-        //If Username and password are correct then redirect to Welcome page. Else show appriate toast msg.
-        loginbutton.setOnClickListener(new View.OnClickListener() {
+        btn_Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                String username = txtboxUsername.getText().toString();
-                String password = txtBoxpass.getText().toString();
+                String username = txt_Username.getText().toString();
+                String password = txt_Password.getText().toString();
                 int userid=databaseHelper.getUserId(username);
                 databaseHelper.setisActive(userid);
 
@@ -57,33 +56,31 @@ public class LoginPageActivity extends AppCompatActivity {
 
                     }
                     else if(password.equals("")){
-                        txtBoxpass.setError("Password can't be empty!");
+                        txt_Password.setError("Password can't be empty!");
                     }
                     else
                     {
                         t =Toast.makeText(context,"Incorrect Password!",Toast.LENGTH_LONG);
                         t.show();
-                        txtBoxpass.setText("");
+                        txt_Password.setText("");
                     }
                 } else if (username.equals("")){
                     Toast toast =Toast.makeText(context,"Username can't be empty!",Toast.LENGTH_LONG);
                     toast.show();
-                    txtboxUsername.setError("Username can't be empty!");
-                    txtboxUsername.setText("");
-                    txtBoxpass.setText("");
+                    txt_Username.setError("Username can't be empty!");
+                    txt_Username.setText("");
+                    txt_Password.setText("");
                 }
                 else{
-                    txtboxUsername.setError("User not found!");
+                    txt_Username.setError("User not found!");
                     Toast toast = Toast.makeText(context, "User not found! Click SignUp to register.", Toast.LENGTH_LONG);
                     toast.show();
-                    txtBoxpass.setText("");
+                    txt_Password.setText("");
                 }
 
             }
         });
-
-        // On SignUp button click , user is taken to SignUp Activity Screen
-        SignupBtn.setOnClickListener(new View.OnClickListener() {
+        btn_SignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent signup = new Intent(LoginPageActivity.this,SignupActivity.class);

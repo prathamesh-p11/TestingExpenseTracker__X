@@ -15,9 +15,9 @@ public class MainActivity extends AppCompatActivity {
 
     private static int SPLASH_SCREEN = 4000;
 
-    Animation topAnim, bottomAnim;
-    ImageView logo_image;
-    TextView logo_text;
+    Animation anim_TopAnim, anim_BottomAnim;
+    ImageView img_logo_image;
+    TextView txt_logo_text;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,14 +25,14 @@ public class MainActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
-        topAnim = AnimationUtils.loadAnimation(this,R.anim.top_animation);
-        bottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
+        anim_TopAnim = AnimationUtils.loadAnimation(this,R.anim.top_animation);
+        anim_BottomAnim = AnimationUtils.loadAnimation(this, R.anim.bottom_animation);
 
-        logo_image = findViewById(R.id.logo_image_id);
-        logo_text = findViewById(R.id.logo_text_id);
+        img_logo_image = findViewById(R.id.logo_image_id);
+        txt_logo_text = findViewById(R.id.logo_text_id);
 
-        logo_image.setAnimation(topAnim);
-        logo_text.setAnimation(bottomAnim);
+        img_logo_image.setAnimation(anim_TopAnim);
+        txt_logo_text.setAnimation(anim_BottomAnim);
 
         new Handler().postDelayed(new Runnable() {
             @Override

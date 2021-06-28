@@ -20,14 +20,13 @@ public class ProfileFragment extends Fragment {
 
     DatabaseHelper databaseHelper;
     HashMap<String,String > userDetails=new HashMap<>();
-    EditText EtUsername,Etpassword,EtRetypePass,EtEmail,Etphone;
-    String EmailValue,PhoneValue;
-    Button btnUpdate;
+    EditText txt_Username,txt_Password,txt_ReTypePassword,txt_Email,txt_Phone;
+    String str_Email,str_Phone;
+    Button btn_Update;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
     }
 
     @Override
@@ -37,71 +36,71 @@ public class ProfileFragment extends Fragment {
         // Inflate the layout for this fragment
          View root =inflater.inflate(R.layout.fragment_profile, container, false);
         databaseHelper=new DatabaseHelper(getContext());
-        EtUsername=root.findViewById(R.id.et_update_Username);
-        Etpassword=root.findViewById(R.id.et_update_Password);
-        EtRetypePass=root.findViewById(R.id.et_update_RetypePass);
-        EtEmail=root.findViewById(R.id.et_update_Email);
-        Etphone=root.findViewById(R.id.et_update_Phone);
-        btnUpdate=root.findViewById(R.id.btnUpdateProfile);
+        txt_Username=root.findViewById(R.id.et_update_Username);
+        txt_Password=root.findViewById(R.id.et_update_Password);
+        txt_ReTypePassword=root.findViewById(R.id.et_update_RetypePass);
+        txt_Email=root.findViewById(R.id.et_update_Email);
+        txt_Phone=root.findViewById(R.id.et_update_Phone);
+        btn_Update=root.findViewById(R.id.btnUpdateProfile);
         userDetails=databaseHelper.getUserdetails(databaseHelper.getActiveUserId());
         if(userDetails.size()>0)
         {
 
 
-            EtUsername.setText(userDetails.get("user_name"));
-            Etpassword.setText(userDetails.get("password"));
-            EtRetypePass.setText(userDetails.get("password"));
-            EtEmail.setText(userDetails.get("user_email"));
-            Etphone.setText(userDetails.get("user_mobile"));
+            txt_Username.setText(userDetails.get("user_name"));
+            txt_Password.setText(userDetails.get("password"));
+            txt_ReTypePassword.setText(userDetails.get("password"));
+            txt_Email.setText(userDetails.get("user_email"));
+            txt_Phone.setText(userDetails.get("user_mobile"));
 
-            EtUsername.setEnabled(false);
-            Etpassword.setEnabled(false);
-            EtRetypePass.setEnabled(false);
-            EtUsername.setAlpha((float) 0.5);
-            Etpassword.setAlpha((float) 0.5);
-            EtRetypePass.setAlpha((float) 0.5);
+            txt_Username.setEnabled(false);
+            txt_Password.setEnabled(false);
+            txt_ReTypePassword.setEnabled(false);
+            txt_Username.setAlpha((float) 0.5);
+            txt_Password.setAlpha((float) 0.5);
+            txt_ReTypePassword.setAlpha((float) 0.5);
 
         }
         //Validation of email on tab
-        EtEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        txt_Email.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean focus) {
                 if(!focus)
                 {
-                    EmailValue=EtEmail.getText().toString();
+                    str_Email=txt_Email.getText().toString();
 
-                    if(!IsEmailValid(EmailValue))
+                    if(!IsEmailValid(str_Email))
                     {
-                        EtEmail.setError("Invalid email!");
+                        txt_Email.setError("Invalid email!");
                     }
                 }
             }
         });
 
         //Validation of phone on tab
-        Etphone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        txt_Phone.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean focus) {
                 if(!focus)
                 {
-                    PhoneValue=Etphone.getText().toString();
+                    str_Phone=txt_Phone.getText().toString();
 
-                    if(!IsPhoneValid(PhoneValue))
+                    if(!IsPhoneValid(str_Phone))
                     {
-                        Etphone.setError("Invalid phone number!");
+                        txt_Phone.setError("Invalid phone number!");
                     }
                 }
             }
         });
 
-btnUpdate.setOnClickListener(new View.OnClickListener() {
+btn_Update.setOnClickListener(new View.OnClickListener() {
     @Override
     public void onClick(View v) {
-        EmailValue=  EtEmail.getText().toString();
-        PhoneValue=Etphone.getText().toString();
-        if(IsEmailValid(EmailValue) && IsPhoneValid(PhoneValue))
+        str_Email=  txt_Email.getText().toString();
+        str_Phone=txt_Phone.getText().toString();
+        if(IsEmailValid(str_Email) && IsPhoneValid(str_Phone))
         {
-          if(  databaseHelper.updateUserDetails( EmailValue,PhoneValue, databaseHelper.getActiveUserId()))
+          if(  databaseHelper.updateUserDetails( str_Email,str_Phone, databaseHelper.getActiveUserId()))
           {
               Toast.makeText(getContext(),"User details updated! Please login again.",Toast.LENGTH_LONG).show();
               Intent intent=new Intent(getContext(),LoginPageActivity.class);
@@ -119,11 +118,7 @@ btnUpdate.setOnClickListener(new View.OnClickListener() {
 
     }
 });
-
-
-
-
-        return root;
+    return root;
     }
 
     boolean IsEmailValid(String email)

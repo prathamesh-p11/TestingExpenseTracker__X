@@ -22,42 +22,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     static String name = "expense_manager_database";
     static int version = 1;
 
-   private static final String createTableUser = "CREATE TABLE if not exists 'user' ('user_id' INTEGER NOT NULL PRIMARY KEY UNIQUE, 'user_name' TEXT," +
+    private static final String CreateTable_USER = "CREATE TABLE if not exists 'user' ('user_id' INTEGER NOT NULL PRIMARY KEY UNIQUE, 'user_name' TEXT," +
             "'password' TEXT, 'user_email' TEXT, 'user_mobile' TEXT,'isNewUser' BIT,'rememberMe' BIT NOT NULL,'isActive' BIT NOT NULL)";
 
-   private static final String createTableExpenseItems = "CREATE TABLE if not exists 'expense_items' ('item_id' INTEGER NOT NULL PRIMARY KEY UNIQUE, 'Item_name' TEXT,'user_id' INTEGER,FOREIGN KEY('user_id') REFERENCES user(user_id))";
-    private static final String createTableUserExpense="CREATE TABLE if not exists 'user_expenses' ('user_expense_id' INTEGER NOT NULL PRIMARY KEY UNIQUE, 'user_id' INTEGER  ,'expense_item_id' INTEGER , 'expense' MONEY,'expense_date' DATE, 'inserted_date' DATE,FOREIGN KEY('user_id') REFERENCES user(user_id), FOREIGN KEY('expense_item_id') REFERENCES expense_items(item_id) )";
-    private static final String createTableUsrGoalForAnnualSavings="CREATE TABLE if not exists 'user_goal_for_annual_savings'( 'goal_id' INTEGER NOT NULL PRIMARY KEY UNIQUE,'user_id' INTEGER,'year' YEAR,'desired_savings_for_year' MONEY,'annual_income' MONEY,'max_daily_expense' MONEY,FOREIGN KEY('user_id') REFERENCES user(user_id), CONSTRAINT USER_INCOME_BY_YEAR UNIQUE(user_id,year))";
+    private static final String createTable_EXPENSE_ITEMS = "CREATE TABLE if not exists 'expense_items' ('item_id' INTEGER NOT NULL PRIMARY KEY UNIQUE, 'Item_name' TEXT,'user_id' INTEGER,FOREIGN KEY('user_id') REFERENCES user(user_id))";
+    private static final String createTable_EXPENSE="CREATE TABLE if not exists 'user_expenses' ('user_expense_id' INTEGER NOT NULL PRIMARY KEY UNIQUE, 'user_id' INTEGER  ,'expense_item_id' INTEGER , 'expense' MONEY,'expense_date' DATE, 'inserted_date' DATE,FOREIGN KEY('user_id') REFERENCES user(user_id), FOREIGN KEY('expense_item_id') REFERENCES expense_items(item_id) )";
+    private static final String createTable_USER_GOAL_ANNUAL_SAVINGS="CREATE TABLE if not exists 'user_goal_for_annual_savings'( 'goal_id' INTEGER NOT NULL PRIMARY KEY UNIQUE,'user_id' INTEGER,'year' YEAR,'desired_savings_for_year' MONEY,'annual_income' MONEY,'max_daily_expense' MONEY,FOREIGN KEY('user_id') REFERENCES user(user_id), CONSTRAINT USER_INCOME_BY_YEAR UNIQUE(user_id,year))";
 
-    //Creating a dummy table to test reports **Must remove later**
-    String createTabledummyreports = "CREATE TABLE if not exists daily_exp_dummy_2 (\n" +
-            "    date     DATE,\n" +
-            "    expenses DECIMAL\n" +
-            ");\n";
 
     public DatabaseHelper(Context context) {
         super(context, name, null, version);
-     //  getWritableDatabase().execSQL("DROP TABLE IF EXISTS user");
-     // getWritableDatabase().execSQL("DROP TABLE IF EXISTS user_goal_for_annual_savings");
-     //  getWritableDatabase().execSQL("DROP TABLE IF EXISTS expense_items");
-     //  getWritableDatabase().execSQL("DROP TABLE IF EXISTS user_expenses");
-        getWritableDatabase().execSQL(createTableUser);
-        getWritableDatabase().execSQL(createTableExpenseItems);
-        getWritableDatabase().execSQL(createTableUserExpense);
-        getWritableDatabase().execSQL(createTableUsrGoalForAnnualSavings);
-        //Creating a dummy table to test reports **Must remove later**
-        getWritableDatabase().execSQL(createTabledummyreports);
-
-
-
+        getWritableDatabase().execSQL(CreateTable_USER);
+        getWritableDatabase().execSQL(createTable_EXPENSE_ITEMS);
+        getWritableDatabase().execSQL(createTable_EXPENSE);
+        getWritableDatabase().execSQL(createTable_USER_GOAL_ANNUAL_SAVINGS);
     }
 
     public int getExpenseId(String item_name, int user_id){
-        String sql="Select item_id from expense_items where user_id='"+user_id+"' and Item_name='"+item_name+"'";
-        SQLiteStatement statement=getReadableDatabase().compileStatement(sql);
+        String sql_QUERY="Select item_id from expense_items where user_id='"+user_id+"' and Item_name='"+item_name+"'";
+        SQLiteStatement sqlite_STATEMENT=getReadableDatabase().compileStatement(sql_QUERY);
         int id;
-        id=Integer.parseInt(statement.simpleQueryForString());
-        statement.close();
+        id=Integer.parseInt(sqlite_STATEMENT.simpleQueryForString());
+        sqlite_STATEMENT.close();
 
         return id;
     }
@@ -80,10 +66,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public HashMap<String,String> getUserdetails( int user_id){
         HashMap<String ,String> details = null;
-        String sql="Select * from user where user_id='"+user_id+"'";
+        String sql_QUERY="Select * from user where user_id='"+user_id+"'";
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor= db.rawQuery(sql, null);
+        Cursor cursor= db.rawQuery(sql_QUERY, null);
 
         if(cursor.moveToFirst()){
             do{
@@ -109,9 +95,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
             UsercontentValues.put("user_email", email);
             UsercontentValues.put("user_mobile", phoneNo);
-          //  UsercontentValues.put("password", password);
 
-            //returns number of rows affected..else returns -1
             isSuccessfull = getWritableDatabase().update("user", UsercontentValues,"user_id=?",new String[]{String.valueOf(userId)}) <1 ? false : true;
         }
         catch (SQLiteException e)
@@ -122,12 +106,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return isSuccessfull;
     }
 
-    public double getDailyExpenses(DatabaseHelper dop, String date, int user_id){
+    public double getDailyExpenses(DatabaseHelper dbhelper, String date, int user_id){
         double expense = 0;
-        String sql="Select * from user_expenses where expense_date='"+date+"' and user_id='"+user_id+"'";
+        String sql_QUERY="Select * from user_expenses where expense_date='"+date+"' and user_id='"+user_id+"'";
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor= db.rawQuery(sql, null);
+        Cursor cursor= db.rawQuery(sql_QUERY, null);
 
         if(cursor.moveToFirst()){
             do{
@@ -141,11 +125,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public int getSaving(int user_id){
-        String sql="Select max_daily_expense from user_goal_for_annual_savings where user_id='"+user_id+"'";
-        SQLiteStatement statement=getReadableDatabase().compileStatement(sql);
+        String sql_QUERY="Select max_daily_expense from user_goal_for_annual_savings where user_id='"+user_id+"'";
+        SQLiteStatement sqlite_STATEMENT=getReadableDatabase().compileStatement(sql_QUERY);
         int exp;
-        exp=Integer.parseInt(statement.simpleQueryForString());
-        statement.close();
+        exp=Integer.parseInt(sqlite_STATEMENT.simpleQueryForString());
+        sqlite_STATEMENT.close();
         return exp;
     }
 
@@ -157,10 +141,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public boolean isLoginValid(String username, String password) {
-        String sql = "Select count(*) from user where user_name='" + username + "' and password='" + password + "'";
-        SQLiteStatement statement = getReadableDatabase().compileStatement(sql);
-        long l = statement.simpleQueryForLong();
-        statement.close();
+        String sql_QUERY = "Select count(*) from user where user_name='" + username + "' and password='" + password + "'";
+        SQLiteStatement sqlite_STATEMENT = getReadableDatabase().compileStatement(sql_QUERY);
+        long l = sqlite_STATEMENT.simpleQueryForLong();
+        sqlite_STATEMENT.close();
 
         if (l == 1) {
             return true;
@@ -171,10 +155,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     public boolean isUserUnique(String username){
-        String sql = "Select count(*) from user where user_name='" + username + "'";
-        SQLiteStatement statement = getReadableDatabase().compileStatement(sql);
-        long l = statement.simpleQueryForLong();
-        statement.close();
+        String sql_QUERY = "Select count(*) from user where user_name='" + username + "'";
+        SQLiteStatement sqlite_STATEMENT = getReadableDatabase().compileStatement(sql_QUERY);
+        long l = sqlite_STATEMENT.simpleQueryForLong();
+        sqlite_STATEMENT.close();
 
         if(l == 0){
             return true;
@@ -184,20 +168,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public String getActiveUserEmail()
     {
-        String sql="Select user_email from user where user_id='"+getActiveUserId()+"'";
-        SQLiteStatement statement=getReadableDatabase().compileStatement(sql);
-        String email=statement.simpleQueryForString();
-        statement.close();
+        String sql_QUERY="Select user_email from user where user_id='"+getActiveUserId()+"'";
+        SQLiteStatement sqlite_STATEMENT=getReadableDatabase().compileStatement(sql_QUERY);
+        String email=sqlite_STATEMENT.simpleQueryForString();
+        sqlite_STATEMENT.close();
 
         return email;
 
     }
     public String getActiveUserName()
     {
-        String sql="Select user_name from user where user_id='"+getActiveUserId()+"'";
-        SQLiteStatement statement=getReadableDatabase().compileStatement(sql);
-        String name=statement.simpleQueryForString();
-        statement.close();
+        String sql_QUERY="Select user_name from user where user_id='"+getActiveUserId()+"'";
+        SQLiteStatement sqlite_STATEMENT=getReadableDatabase().compileStatement(sql_QUERY);
+        String name=sqlite_STATEMENT.simpleQueryForString();
+        sqlite_STATEMENT.close();
 
         return name;
 
@@ -206,19 +190,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int get_isNewUser(String username)
     {
         String sqlQuery="select isNewUser from user where user_name='"+username+"'";
-        SQLiteStatement statement=getReadableDatabase().compileStatement(sqlQuery);
-        int flag=Integer.parseInt(statement.simpleQueryForString());
-        statement.close();
+        SQLiteStatement sqlite_STATEMENT=getReadableDatabase().compileStatement(sqlQuery);
+        int flag=Integer.parseInt(sqlite_STATEMENT.simpleQueryForString());
+        sqlite_STATEMENT.close();
         return flag;
     }
 
-    //method to fetch categories from database when categories page is loaded by Kiran June 29 2020
     public ArrayList<String> getAllCategoriesofUser(int userid) {
         ArrayList<String> cat = new ArrayList<>();
-        String sql = "Select Item_name from expense_items where user_id='" + userid + "'";
+        String sql_QUERY = "Select Item_name from expense_items where user_id='" + userid + "'";
 
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor= db.rawQuery(sql, null);
+        Cursor cursor= db.rawQuery(sql_QUERY, null);
 
         if(cursor.moveToFirst()){
             do{
@@ -232,7 +215,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    //method to insert default categories into expense items by Kiran June 28 2020
     public void addDefaultCategories(String username){
         int i = getUserId(username);
 
@@ -254,7 +236,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         insertCategory(userContentValues);
     }
 
-    //method to insert category into expense items table by Kiran June 29 2020
     void insertCategory(ContentValues userContentValues) {
         try{
             getWritableDatabase().insert("expense_items", "", userContentValues);
@@ -264,7 +245,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
 
     }
-    //method to remove category from expense items table by Kiran June 30 2020
     void removeCategory(String category){
         try {
             getWritableDatabase().delete("expense_items", "Item_name=?", new String[]{category});
@@ -273,14 +253,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-
-    //to check whether the category exixts in database by Kiran June 29 2020
     public boolean isCategoryInExpenses (String item, int user_id){
 
-        String sql = "Select item_id from expense_items where Item_name='" + item + "' and user_id='"+user_id+"'";
-        SQLiteStatement statement = getReadableDatabase().compileStatement(sql);
-        long item_id = statement.simpleQueryForLong();
-        statement.close();
+        String sql_QUERY = "Select item_id from expense_items where Item_name='" + item + "' and user_id='"+user_id+"'";
+        SQLiteStatement sqlite_STATEMENT = getReadableDatabase().compileStatement(sql_QUERY);
+        long item_id = sqlite_STATEMENT.simpleQueryForLong();
+        sqlite_STATEMENT.close();
 
         String sql2 = "Select count(*) from user_expenses where expense_item_id='"+item_id+"'";
         SQLiteStatement statement1 = getReadableDatabase().compileStatement(sql2);
@@ -295,7 +273,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
 
-    //**********START ***HN 28 jun 2020********
     public boolean setGoals(Double AnnualIncome, Double desired_annual_savings, Double max_daily_expense,int userId)
     {
         boolean isSuccessfull = false;
@@ -347,9 +324,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int id=-1;
         try {
             String sqlQuery="select user_id from user where user_name='"+username+"'";
-            SQLiteStatement statement=getReadableDatabase().compileStatement(sqlQuery);
-            id=Integer.parseInt(statement.simpleQueryForString());
-            statement.close();
+            SQLiteStatement sqlite_STATEMENT=getReadableDatabase().compileStatement(sqlQuery);
+            id=Integer.parseInt(sqlite_STATEMENT.simpleQueryForString());
+            sqlite_STATEMENT.close();
 
         }
         catch (SQLiteException e)
@@ -365,9 +342,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int id=-1;
         try {
             String sqlQuery="select user_id from user where isActive=1";
-            SQLiteStatement statement=getReadableDatabase().compileStatement(sqlQuery);
-            id=Integer.parseInt(statement.simpleQueryForString());
-            statement.close();
+            SQLiteStatement sqlite_STATEMENT=getReadableDatabase().compileStatement(sqlQuery);
+            id=Integer.parseInt(sqlite_STATEMENT.simpleQueryForString());
+            sqlite_STATEMENT.close();
 
         }
         catch (SQLiteException e)
@@ -419,30 +396,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             e.printStackTrace();
         }
     }
-  /*  public ArrayList<String> getUserNameNPassword()
-    {
-        ArrayList<String> data=null;
-        try {
-            data=new ArrayList<>();
-            String sqlQueryUsername="select user_name from user where rememberMe=1";
-            SQLiteStatement statement1=getReadableDatabase().compileStatement(sqlQueryUsername);
-            data.add(0,statement1.simpleQueryForString());
-            statement1.close();
-            String sqlQueryPassword="select password from user where user_name="+data.get(0);
-            SQLiteStatement statement2=getReadableDatabase().compileStatement(sqlQueryPassword);
-            data.add(1,statement2.simpleQueryForString());
-            statement2.close();
-
-
-        }
-        catch (SQLiteException e)
-        {
-            e.printStackTrace();
-        }
-
-
-        return data;
-    }*/
 
     public Cursor getUserNameNPassword()
     {
@@ -459,7 +412,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
 
-    //*****************END**HN 28 jun 2020********************
     @Override
     public void onCreate(SQLiteDatabase db) {
 
@@ -514,16 +466,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         int CurrentYear=localDate.getYear();
         String LastYearDate= String.valueOf(CurrentYear-1)+"-12-31";
         String CurrentDate=dtf.format(localDate);
-       // float daysBetween = (localDate- / (1000*60*60*24));
-
 
 
         try {
-            //To get Total expenses for today
           Cursor  Todayexpenses=getWritableDatabase().rawQuery("select expense from user_expenses where user_id='"+activeUserId+"' and expense_date= '"+CurrentDate+"'",null);
           if(Todayexpenses!=null ||Todayexpenses.getCount()>0)
           {
-              //Todayexpenses.moveToFirst()-->Returns false if cursor is empty
               if(Todayexpenses.moveToFirst())
               {
                   do {
@@ -533,13 +481,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
               }
           }
           Todayexpenses.close();
-          //To get Total expenses so far this year
           String query="SELECT expense FROM user_expenses where expense_date >"+LastYearDate+" AND user_id='"+activeUserId+"' ";
           Cursor YearlyExpenditure=getWritableDatabase().rawQuery(query,null);
 
             if(YearlyExpenditure!=null ||YearlyExpenditure.getCount()>0)
             {
-                //Todayexpenses.moveToFirst()-->Returns false if cursor is empty
                 if(YearlyExpenditure.moveToFirst())
                 {
                     do {
@@ -575,7 +521,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         {
             e.printStackTrace();
         }
-
         return todaysdata;
     }
 }

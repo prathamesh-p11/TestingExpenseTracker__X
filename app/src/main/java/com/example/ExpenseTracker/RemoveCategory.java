@@ -15,8 +15,8 @@ import androidx.fragment.app.FragmentTransaction;
 import java.util.ArrayList;
 
 public class RemoveCategory extends Fragment {
-    TextView display;
-    EditText enter_here;
+    TextView txt_Display;
+    EditText txt_CategoryToRemove;
     Button remove_category;
     Button cancel;
     private ArrayList<String> items_list;
@@ -42,8 +42,8 @@ public class RemoveCategory extends Fragment {
         final DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
         View view = inflater.inflate(R.layout.fragment_remove_category, container, false);
         items_list = databaseHelper.getAllCategoriesofUser(databaseHelper.getActiveUserId());
-        display = view.findViewById(R.id.add_category_text);
-        enter_here = view.findViewById(R.id.category_from_user_remove);
+        txt_Display = view.findViewById(R.id.add_category_text);
+        txt_CategoryToRemove = view.findViewById(R.id.category_from_user_remove);
         remove_category = view.findViewById(R.id.remove_category);
         cancel = view.findViewById(R.id.cancel_remove);
         userId=databaseHelper.getActiveUserId();
@@ -52,10 +52,10 @@ public class RemoveCategory extends Fragment {
         remove_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String remove_category = enter_here.getText().toString();
+                String remove_category = txt_CategoryToRemove.getText().toString();
 
                 if(remove_category.isEmpty()){
-                    enter_here.setError("Field can't be empty!");
+                    txt_CategoryToRemove.setError("Field can't be empty!");
                 }
                 else{
 

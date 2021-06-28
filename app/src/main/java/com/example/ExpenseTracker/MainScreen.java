@@ -29,9 +29,6 @@ import com.google.android.material.navigation.NavigationView;
 public class MainScreen extends AppCompatActivity  {
 
     DatabaseHelper databaseHelper;
-    TextView txt_UserName;
-    TextView txt_USerEmail;
-    Bundle bundle;
     int pageId;
     String userName;
 
@@ -43,20 +40,12 @@ public class MainScreen extends AppCompatActivity  {
         setContentView(R.layout.activity_main_screen);
         databaseHelper=new DatabaseHelper(this);
 
-
-         userName=getIntent().getStringExtra("UserName");
-
-
+        userName=getIntent().getStringExtra("UserName");
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
         FloatingActionButton fab = findViewById(R.id.fab);
-
-
-
-
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -70,8 +59,7 @@ public class MainScreen extends AppCompatActivity  {
         });
         DrawerLayout drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
-        // Passing each menu ID as a set of Ids because each
-        // menu should be considered as top level destinations.
+
         mAppBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.nav_home, R.id.nav_reports,R.id.nav_categories, R.id.nav_logout,R.id.nav_Editgoals,R.id.nav_help,R.id.nav_profile)
                 .setDrawerLayout(drawer)
@@ -102,10 +90,9 @@ public class MainScreen extends AppCompatActivity  {
                     case R.id.nav_categories:
                     {
                         Toast.makeText(getApplicationContext(),"Categories",Toast.LENGTH_SHORT).show();
-                       // CategoryFragment frag_obj = CategoryFragment.newInstance(userName);
+
                         CategoryFragment frag_obj=new CategoryFragment();
-                       // CategoryLayout frag_layout = new CategoryLayout();
-                       // AddCategory frag = new AddCategory();
+
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, frag_obj).commit();
                         break;
                     }
@@ -143,8 +130,7 @@ public class MainScreen extends AppCompatActivity  {
                 }
             }
         });
-        //************************ start HN 28 jun 2020*****************
-        // To display dialog window for new user
+
         if(databaseHelper.get_isNewUser(userName)==1)
         {
             popUpWin_forInputs popup=new popUpWin_forInputs();
@@ -152,11 +138,8 @@ public class MainScreen extends AppCompatActivity  {
             bundle.putString("username",userName);
             popup.setArguments(bundle);
             popup.show(getSupportFragmentManager(),"dialog");
-
-
-
         }
-        //************************ end HN 28 jun 2020*****************
+
         if(savedInstanceState==null)
         {
             HomeFragment homeFragment=new HomeFragment();

@@ -8,15 +8,18 @@
     android:layout_marginLeft="30dp"
     android:layout_marginTop="40dp"
     android:layout_marginRight="30dp"
-    android:background="@color/colorPrimary"
+    android:background="#1e1e1e"
     android:gravity="center_horizontal"
     android:orientation="vertical"
+
     app:cardCornerRadius="@dimen/cardview_default_radius">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/remove_category_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#1e1e1e"
+        >
 
 
         <Button
@@ -27,9 +30,8 @@
             android:layout_marginTop="36dp"
             android:layout_marginBottom="40dp"
             android:background="@color/colorPrimary"
-
-            android:fontFamily="sans-serif-condensed-medium"
-            android:text="Remove    "
+            android:text="Remove"
+            android:paddingLeft="5dp"
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="20dp"
@@ -47,10 +49,7 @@
             android:layout_marginEnd="60dp"
             android:layout_marginBottom="40dp"
             android:background="@color/colorPrimary"
-            android:fontFamily="sans-serif-condensed-medium"
-
             android:text="Cancel"
-
             android:textAllCaps="false"
             android:textColor="@color/white"
             android:textSize="20dp"
@@ -63,9 +62,7 @@
             android:layout_width="228dp"
             android:layout_height="52dp"
             android:layout_marginTop="20dp"
-            android:background="@color/EditTexBg"
-
-            android:fontFamily="sans-serif-condensed-medium"
+            android:background="@color/white"
             android:hint="Category"
             android:textColor="@color/textColor"
             android:textSize="20dp"
@@ -76,13 +73,11 @@
 
         <TextView
             android:id="@+id/add_category_text"
-            android:layout_width="227dp"
+            android:layout_width="280dp"
             android:layout_height="49dp"
             android:layout_marginTop="30dp"
-            android:fontFamily="sans-serif-condensed-medium"
-
             android:text="Enter category name below:"
-            android:textColor="@color/textColor"
+            android:textColor="@color/white"
             android:textSize="21dp"
             app:layout_constraintBottom_toTopOf="@+id/category_from_user_remove"
             app:layout_constraintEnd_toEndOf="parent"
@@ -95,7 +90,6 @@
             android:layout_height="50dp"
             android:layout_marginBottom="40dp"
             android:background="@color/colorPrimary"
-            android:fontFamily="sans-serif-condensed-medium"
             android:text="Remove Category"
             android:textAlignment="center"
             android:textColor="@color/white"

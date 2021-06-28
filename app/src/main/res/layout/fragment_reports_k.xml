@@ -5,6 +5,7 @@
     android:id="@+id/reports_options_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#1e1e1e"
     tools:context=".ui.reports.ReportsFragment">
 
 
@@ -60,7 +61,7 @@
 
         android:padding="3dp"
         android:src="@drawable/ic_text_calender"
-        android:tint="@color/white"
+        app:tint="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/select_end_date"
         app:layout_constraintStart_toEndOf="@id/select_start_date"
         app:layout_constraintTop_toTopOf="parent" />
@@ -75,7 +76,7 @@
 
         android:padding="3dp"
         android:src="@drawable/ic_text_calender"
-        android:tint="@color/white"
+        app:tint="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/select_start_date"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />

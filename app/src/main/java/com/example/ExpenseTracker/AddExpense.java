@@ -27,20 +27,20 @@ import java.util.Date;
 
 public class AddExpense extends AppCompatActivity
 {
-    EditText ed1;
+    EditText txt_expense;
 
-    ArrayList<String> categories;
-    ImageButton select_date_button;
-    Button submit_button;
+    ArrayList<String> list_categories;
+    ImageButton btn_select_date_button;
+    Button btn_submit_button;
     public static TextView show_date;
 
     boolean IsFuture(String s) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date d1 = sdf.parse(s);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        Date date_1 = simpleDateFormat.parse(s);
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE,1);
-        Date d2 = cal.getTime();
-        if(d1.compareTo(d2) > 0){
+        Date date_2 = cal.getTime();
+        if(date_1.compareTo(date_2) > 0){
             return true;
         }
         else
@@ -51,23 +51,18 @@ public class AddExpense extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expense);
-        // databaseHelper=new DatabaseHelper();
-        //CategoryFragment frag_obj = new CategoryFragment();
-        //CategoryLayout frag_layout = new CategoryLayout();
-        // AddCategory frag = AddCategory.newInstance(userName);
-        // getSupportFragmentManager().beginTransaction().replace(R.id.CategoryListLayout, frag_layout).commit();
         final DatabaseHelper databaseHelper = new DatabaseHelper(this);
         final int user_id = databaseHelper.getActiveUserId();
-        categories = databaseHelper.getAllCategoriesofUser(user_id);
+        list_categories = databaseHelper.getAllCategoriesofUser(user_id);
         final Spinner spinner = (Spinner)findViewById(R.id.CategoryListLayout);
-        submit_button = findViewById(R.id.btnsubmit);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(AddExpense.this, android.R.layout.simple_list_item_1, categories);
+        btn_submit_button = findViewById(R.id.btnsubmit);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(AddExpense.this, android.R.layout.simple_list_item_1, list_categories);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         show_date = findViewById(R.id.Date_text);
-        select_date_button = findViewById(R.id.slect_date_button);
-        ed1 = findViewById(R.id.edText1);
-        select_date_button.setOnClickListener(new View.OnClickListener() {
+        btn_select_date_button = findViewById(R.id.slect_date_button);
+        txt_expense = findViewById(R.id.edText1);
+        btn_select_date_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment datePicker = new AddExpense.DatePickerFragmentC();
@@ -75,7 +70,7 @@ public class AddExpense extends AppCompatActivity
             }
         });
 
-        submit_button.setOnClickListener(new View.OnClickListener() {
+        btn_submit_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -95,18 +90,15 @@ public class AddExpense extends AppCompatActivity
                         Toast toast3 =Toast.makeText(AddExpense.this,"Future date not allowed! ",Toast.LENGTH_LONG);
                         toast3.show();
                     }
-                    else if(ed1.getText().toString().equals("")){
-                        ed1.setError("Expense can't be blank!");
+                    else if(txt_expense.getText().toString().equals("")){
+                        txt_expense.setError("Expense can't be blank!");
                     }
                     else{
-                        double expense = Double.parseDouble(ed1.getText().toString());
+                        double expense = Double.parseDouble(txt_expense.getText().toString());
                         databaseHelper.insertExpense(user_id, expense_id, expense, date, current_date);
                         Toast toast1 =Toast.makeText(AddExpense.this,"Expense added! ",Toast.LENGTH_LONG);
                         toast1.show();
-                        //finish();
-                       // HomeFragment fragment=new HomeFragment();
-                        //getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment,fragment).commit();
-                        Intent intent=new Intent(getApplicationContext(),MainScreen.class);
+                         Intent intent=new Intent(getApplicationContext(),MainScreen.class);
                         intent.putExtra("UserName",databaseHelper.getActiveUserName());
                         startActivity(intent);
                     }
@@ -118,26 +110,26 @@ public class AddExpense extends AppCompatActivity
     }
     public static class DatePickerFragmentC extends DialogFragment implements DatePickerDialog.OnDateSetListener
     {
-        private String formattedDate;
+        private String str_formattedDate;
         @NonNull
         @Override
         public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
             Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-            return new DatePickerDialog(getActivity(), this, year, month,day);
+            int int_Year = c.get(Calendar.YEAR);
+            int int_Month = c.get(Calendar.MONTH);
+            int int_Day = c.get(Calendar.DAY_OF_MONTH);
+            return new DatePickerDialog(getActivity(), this, int_Year, int_Month,int_Day);
         }
 
         @Override
-        public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+        public void onDateSet(DatePicker view, int int_Year, int int_Month, int int_Day) {
             Calendar c = Calendar.getInstance();
-            c.set(year, month,dayOfMonth);
+            c.set(int_Year, int_Month,int_Day);
 
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            formattedDate = sdf.format(c.getTime());
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            str_formattedDate = simpleDateFormat.format(c.getTime());
 
-            AddExpense.show_date.setText(formattedDate);
+            AddExpense.show_date.setText(str_formattedDate);
         }
     }
 }

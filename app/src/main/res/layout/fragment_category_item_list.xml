@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/category_layout"
-    tools:context=".CategoryLayout">
+    android:background="#1e1e1e"
+    tools:context=".CategoryLayout"
+    >
 
 </FrameLayout>

@@ -84,7 +84,6 @@ public class ReportsFragmentK extends Fragment {
     public static void setDateFromView(String date){
         date_from_view = date;
     }
-    //method to check if date provided is future date by Kiran June 28 2020
     boolean IsFuture(String s) throws ParseException {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date d1 = sdf.parse(s);

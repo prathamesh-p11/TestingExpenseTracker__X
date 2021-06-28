@@ -16,17 +16,17 @@ import androidx.fragment.app.FragmentTransaction;
 import java.util.ArrayList;
 
 public class AddCategory extends Fragment {
-    TextView display;
-    EditText enter_here;
-    Button add_category;
-    Button cancel;
+    TextView txt_display;
+    EditText txt_enter_here;
+    Button btn_add_category;
+    Button btn_cancel;
     private ArrayList<String> items_list;
 
     public AddCategory() {
         // Required empty public constructor
     }
 
-    public static int userId;
+    public static int userID;
 
 
     @Override
@@ -44,20 +44,20 @@ public class AddCategory extends Fragment {
         final DatabaseHelper databaseHelper = new DatabaseHelper(getActivity());
         View view = inflater.inflate(R.layout.fragment_add_category, container, false);
 
-        display = view.findViewById(R.id.add_category_text);
-        enter_here = view.findViewById(R.id.category_from_user);
-        add_category = view.findViewById(R.id.submit_category);
-        cancel = view.findViewById(R.id.cancel_add);
-        userId=databaseHelper.getActiveUserId();
-        items_list = databaseHelper.getAllCategoriesofUser(userId);
+        txt_display = view.findViewById(R.id.add_category_text);
+        txt_enter_here = view.findViewById(R.id.category_from_user);
+        btn_add_category = view.findViewById(R.id.submit_category);
+        btn_cancel = view.findViewById(R.id.cancel_add);
+        userID=databaseHelper.getActiveUserId();
+        items_list = databaseHelper.getAllCategoriesofUser(userID);
 
-        add_category.setOnClickListener(new View.OnClickListener() {
+        btn_add_category.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String custom_category = enter_here.getText().toString();
+                String custom_category = txt_enter_here.getText().toString();
 
                 if(custom_category.isEmpty()){
-                    enter_here.setError("Field can't be empty!");
+                    txt_enter_here.setError("Field can't be empty!");
                 }
                 else{
 
@@ -66,7 +66,7 @@ public class AddCategory extends Fragment {
                     }
                     else {
                         ContentValues userContentValues = new ContentValues();
-                        userContentValues.put("user_id", userId);
+                        userContentValues.put("user_id", userID);
                         userContentValues.put("item_name", custom_category);
                         databaseHelper.insertCategory(userContentValues);
 
@@ -83,7 +83,7 @@ public class AddCategory extends Fragment {
             }
         });
 
-        cancel.setOnClickListener(new View.OnClickListener() {
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Fragment fragment = new CategoryLayout();

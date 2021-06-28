@@ -4,18 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/colorPrimary"
+    android:background="#1e1e1e"
     android:gravity="center_horizontal"
     android:layout_marginLeft="30dp"
     android:layout_marginRight="30dp"
     android:layout_marginTop="40dp"
     app:cardCornerRadius="@dimen/cardview_default_radius"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
 <androidx.constraintlayout.widget.ConstraintLayout
     android:layout_width="match_parent"
     android:id="@+id/add_category_layout"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#1e1e1e"
+    >
 
 
     <TextView
@@ -37,14 +40,12 @@
 
     <TextView
         android:id="@+id/add_category_text"
-        android:layout_width="227dp"
+        android:layout_width="250dp"
         android:layout_height="49dp"
         android:layout_marginTop="40dp"
-        android:text="Enter category name below:"
-
-        android:textColor="@color/textColor"
-        android:fontFamily="sans-serif-condensed-medium"
-        android:textSize="21dp"
+        android:text="Enter category below:"
+        android:textColor="@color/white"
+        android:textSize="25dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -55,10 +56,8 @@
         android:layout_height="52dp"
         android:layout_marginTop="28dp"
         android:hint="Category"
-        android:background="@color/EditTexBg"
-        android:textColor="@color/textColor"
-
-        android:fontFamily="sans-serif-condensed-medium"
+        android:background="@color/white"
+        android:textColor="@color/black"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
@@ -73,10 +72,8 @@
         android:layout_marginRight="30dp"
         android:layout_marginBottom="40dp"
         android:background="@color/colorPrimary"
-        android:fontFamily="sans-serif-condensed-medium"
         android:text="Add"
         android:textAllCaps="false"
-
         android:textColor="@color/white"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -90,15 +87,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="36dp"
-
         android:layout_marginEnd="60dp"
         android:layout_marginBottom="40dp"
         android:background="@color/colorPrimary"
         android:fontFamily="sans-serif-condensed-medium"
         android:text="Cancel"
-
         android:textAllCaps="false"
-
         android:textColor="@color/white"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"

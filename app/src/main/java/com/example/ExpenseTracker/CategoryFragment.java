@@ -13,19 +13,8 @@ import android.view.ViewGroup;
 /**
  * A fragment representing a list of Items.
  */
-public class CategoryFragment extends Fragment {
-
-   /* public static String username;
-
-    public static CategoryFragment newInstance(String user){
-        Bundle args = new Bundle();
-        CategoryFragment.username = user;
-        args.putString("username", user);
-        CategoryFragment fragment = new CategoryFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
-*/
+public class CategoryFragment extends Fragment
+{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,12 +29,10 @@ public class CategoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_category_item_list, container, false);
 
         CategoryLayout fragment = new CategoryLayout();
-       // CategoryLayout fragment = CategoryLayout.newInstance(username);
         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.category_layout, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
-
         return view;
     }
 

@@ -22,4 +22,6 @@
   <color name="blue_light">#60d6ff</color>
   <color name="green">#16ca57</color>
   <color name="red">#f94c46</color>
+  <color name="black">#000000</color>
+
 </resources>
