@@ -4,21 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginLeft="20dp"
-    app:layout_goneMarginTop="20dp"
     tools:context=".HelpFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="  Once user launches the application, user needs to be sign up by providing name, email, phone, and password. User can login to the app once logged in successfully. A window will be popped up upon login asking user to enter annual income, desired savings, and maximum daily expenses, these will be stored in the database for further functionality. User then can navigate through a sliding bar with various options like, categories, reports, profile.
-
-In categories, user will be displayed with few default categories. Along with that user will be provided with an option to add his/her own categories anytime. User can also delete the same if not needed. A category cannot be deleted if it is being used as an expense already.
-
-In reports, user can choose a range of dates and has option to view report of daily expenses or daily savings. App supports any range of dates and provide reports."
-        android:textSize="20dp"
-        android:textColor="@color/textColor"
-        android:fontFamily="sans-serif-condensed-medium" />
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="10dp"
+        android:text="Expense Tracker application will keep and track of income-expense of a user on a day-to-day basis. Each user will be required to register to use the application. The application contains a calculator that takes income (annually), maximum daily expense, and the amount of saving a user plans to reach annually as inputs and calculates the amount of saving. If the user exceeds the daily expense limit, the amount of saving is reduced by the amount of extra expense. If the saving becomes 0 then it gives you a new daily expense amount to maintain the saving goals, and if the daily expense is less than the amount of planned expense, then it will add the surplus to the saving. The expense tracking application will generate a report at the end of a month to show income\expense via multiple graphs. "
+        android:textColor="#000000"
+        android:textSize="22dp" />
 
 </FrameLayout>

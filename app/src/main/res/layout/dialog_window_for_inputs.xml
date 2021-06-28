@@ -8,9 +8,8 @@
 
         android:layout_width="match_parent"
         android:layout_height="64dp"
-        android:background="#FFFFBB33"
+        android:background="@color/green"
         android:contentDescription="@string/app_name"
-        android:fontFamily="@font/berkshire_swash"
         android:scaleType="center"
         android:text="Set savings goal"
         android:textAlignment="center"
