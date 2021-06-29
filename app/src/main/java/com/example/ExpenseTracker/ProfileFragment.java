@@ -102,18 +102,18 @@ btn_Update.setOnClickListener(new View.OnClickListener() {
         {
           if(  databaseHelper.updateUserDetails( str_Email,str_Phone, databaseHelper.getActiveUserId()))
           {
-              Toast.makeText(getContext(),"User details updated! Please login again.",Toast.LENGTH_LONG).show();
+              Toast.makeText(getContext(),"User details updated! Please login again...",Toast.LENGTH_LONG).show();
               Intent intent=new Intent(getContext(),LoginPageActivity.class);
               startActivity(intent);
 
           }
           else
           {
-              Toast.makeText(getContext(),"db ",Toast.LENGTH_SHORT).show();
+              //Toast.makeText(getContext(),"db ",Toast.LENGTH_SHORT).show();
           }
         }
         else {
-            Toast.makeText(getContext(),"Enter valid credentials",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(),"Invalid credentials",Toast.LENGTH_SHORT).show();
         }
 
     }

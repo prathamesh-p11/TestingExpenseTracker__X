@@ -28,7 +28,6 @@ public class ReportsFragment extends Fragment {
         transaction.replace(R.id.reports_empty, fragment);
         transaction.addToBackStack(null);
         transaction.commit();
-        //final TextView textView = root.findViewById(R.id.text_report);
         reportsViewModel.getText().observe(getViewLifecycleOwner(), new Observer<String>() {
             @Override
             public void onChanged(@Nullable String s) {

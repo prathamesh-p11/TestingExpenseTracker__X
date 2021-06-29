@@ -1,0 +1,18 @@
+Annual income (AI) Annual Savings(AS) Daily expense(DE)
+
+DE = floor [(AI - AS)/365]
+
+annual income 80000
+annual savings 4000
+Daily expense 208
+
+ai 100000
+as 20000
+de 219
+
+ai 100000
+as 70000
+de 82
+
+
+

@@ -180,18 +180,18 @@ public class SignupActivity extends AppCompatActivity {
 
                       if( databaseHelper.insertUser(userContentValues)) {
 
-                          Toast.makeText(context, "Successfully registered. You may Login now. ", Toast.LENGTH_LONG).show();
+                          Toast.makeText(context, "Registration successful", Toast.LENGTH_LONG).show();
                           Intent LogIn = new Intent(context, LoginPageActivity.class);
                           startActivity(LogIn);
                       }
                       else
                       {
-                          Toast.makeText(context, "Something went wrong. ", Toast.LENGTH_LONG).show();
+                          //Toast.makeText(context, "Beep bop...something went wrong. ", Toast.LENGTH_LONG).show();
 
                       }
 
                     } else {
-                        Toast.makeText(context, "Enter valid credentials for SignUp", Toast.LENGTH_LONG).show();
+                        Toast.makeText(context, "Invalid credentials, could not sign up", Toast.LENGTH_LONG).show();
                     }
                 }
                 else

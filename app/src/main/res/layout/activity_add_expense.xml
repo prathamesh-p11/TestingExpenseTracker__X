@@ -42,7 +42,7 @@
                 android:id="@+id/slect_date_button"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:background="@color/deeppurple"
+                android:background="@color/dark_purple"
                 android:padding="3dp"
                 android:src="@drawable/ic_text_calender"
                 app:tint="@color/white" />
@@ -93,7 +93,7 @@
             android:id="@+id/btnsubmit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:backgroundTint="@color/deeppurple"
+            android:backgroundTint="@color/dark_purple"
             android:text="Add Expense"
             android:textColor="@android:color/background_light"
             android:textSize="18sp" />

@@ -243,7 +243,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         catch (SQLiteConstraintException e){
 
         }
-
     }
     void removeCategory(String category){
         try {

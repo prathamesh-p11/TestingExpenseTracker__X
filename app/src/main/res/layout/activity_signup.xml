@@ -159,7 +159,7 @@
             android:layout_marginTop="50dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="15dp"
-            android:background="@color/deeppurple"
+            android:background="@color/dark_purple"
             android:fadingEdge="horizontal|vertical"
             android:paddingLeft="60dp"
             android:paddingRight="60dp"

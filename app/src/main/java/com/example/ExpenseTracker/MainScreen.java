@@ -78,18 +78,18 @@ public class MainScreen extends AppCompatActivity  {
 
                         HomeFragment homeFragment=new HomeFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, homeFragment).commit();
-                        Toast.makeText(getApplicationContext(),"Home",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(),"Home",Toast.LENGTH_SHORT).show();
                         break;
                     }
                     case R.id.nav_reports:
                     {
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ReportsFragment()).commit();
-                        Toast.makeText(getApplicationContext(),"reports",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(),"reports",Toast.LENGTH_SHORT).show();
                         break;
                     }
                     case R.id.nav_categories:
                     {
-                        Toast.makeText(getApplicationContext(),"Categories",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(),"Categories",Toast.LENGTH_SHORT).show();
 
                         CategoryFragment frag_obj=new CategoryFragment();
 
@@ -109,12 +109,12 @@ public class MainScreen extends AppCompatActivity  {
                     {
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, new ProfileFragment()).commit();
 
-                        Toast.makeText(getApplicationContext(),"profile",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(),"profile",Toast.LENGTH_SHORT).show();
                         break;
                     }
                     case R.id.nav_help:
                     {
-                        Toast.makeText(getApplicationContext(),"About us",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(),"About us",Toast.LENGTH_SHORT).show();
                          HelpFragment fragment=new HelpFragment();
                         getSupportFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, fragment).commit();
                         break;
@@ -124,7 +124,7 @@ public class MainScreen extends AppCompatActivity  {
                         databaseHelper.userInactive(databaseHelper.getUserId(userName));
                         Intent intent=new Intent(getApplicationContext(),LoginPageActivity.class);
                        startActivity(intent);
-                        Toast.makeText(getApplicationContext(),"logout",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(),"logout",Toast.LENGTH_SHORT).show();
                         break;
                     }
                 }

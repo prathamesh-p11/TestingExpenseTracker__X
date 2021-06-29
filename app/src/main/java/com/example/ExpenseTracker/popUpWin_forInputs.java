@@ -86,7 +86,7 @@ public class popUpWin_forInputs extends DialogFragment {
                     if(Double.parseDouble(txt_MaxDailyExpense.getText().toString())>Math.round((Double.parseDouble(txt_AnnualIncome.getText().toString()) - Double.parseDouble(txt_AnnualSavings.getText().toString())) / 365))
                     {
                         txt_MaxDailyExpense.setError("Expenses seems to be more.Your savings will be reduced to"+String.valueOf(Math.round((Double.parseDouble(txt_AnnualIncome.getText().toString()) -Double.parseDouble(txt_AnnualSavings.getText().toString()) ) / 365)));
-                       Toast.makeText(getContext(),"Maximum expense must tally with Income and Savings!",Toast.LENGTH_SHORT);
+                       Toast.makeText(getContext(),"Daily expense value inconsistent with Annual expense and Savings!",Toast.LENGTH_SHORT);
 
                     }
                     else if(Double.parseDouble(txt_MaxDailyExpense.getText().toString())<Math.round((Double.parseDouble(txt_AnnualIncome.getText().toString()) - Double.parseDouble(txt_AnnualSavings.getText().toString())) / 365))
@@ -124,7 +124,7 @@ public class popUpWin_forInputs extends DialogFragment {
 
                             if (insertSuccessful) {
                                 databaseHelper.addDefaultCategories(databaseHelper.getActiveUserName());
-                                Toast.makeText(getContext(), "Goals have been set!", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "New Goals have been set!", Toast.LENGTH_SHORT).show();
                                 databaseHelper.UpdateisNewUser(userId);
                                 HomeFragment homeFragment = new HomeFragment();
                                 getParentFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, homeFragment).commit();
@@ -145,7 +145,7 @@ public class popUpWin_forInputs extends DialogFragment {
                         {
                             long temp = Math.round((AnnualIncome - DesiredAnnualSavings) / 365);
                             Log.e("Wtf", String.valueOf(temp));
-                            Toast.makeText(getContext(), "Maximum expense must tally with Income and Savings! ", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getContext(), "Daily expense value inconsistent with Annual expense and Savings!", Toast.LENGTH_LONG).show();
                             popUpWin_forInputs popUp=new popUpWin_forInputs();
                             popUp.show(getParentFragmentManager(),"dialog");
 
@@ -159,7 +159,7 @@ public class popUpWin_forInputs extends DialogFragment {
                         HomeFragment homeFragment=new HomeFragment();
                         getActivity().setTitle("Home");
                         getParentFragmentManager().beginTransaction().replace(R.id.nav_host_fragment, homeFragment).commit();
-                        Toast.makeText(getContext(),"Home",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getContext(),"Home",Toast.LENGTH_SHORT).show();
                     }
                 });
         return builder.create();

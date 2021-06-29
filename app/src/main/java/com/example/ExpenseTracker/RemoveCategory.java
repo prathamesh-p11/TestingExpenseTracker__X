@@ -63,11 +63,11 @@ public class RemoveCategory extends Fragment {
                         Toast.makeText(getContext(), "Category doesn't exists!", Toast.LENGTH_LONG).show();
                     }
                     else if(databaseHelper.isCategoryInExpenses(remove_category, userId)){
-                        Toast.makeText(getContext(), "Category is being used as an expense!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Cannot remove category as an expense", Toast.LENGTH_LONG).show();
                     }
                     else {
                         databaseHelper.removeCategory(remove_category);
-                        Toast.makeText(getContext(), "Category removed!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(getContext(), "Category removed", Toast.LENGTH_LONG).show();
                         Fragment fragment = new CategoryLayout();
                         FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.category_layout, fragment);

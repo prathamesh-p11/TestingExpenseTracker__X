@@ -83,15 +83,15 @@ public class AddExpense extends AppCompatActivity
 
                 try {
                     if(show_date.getText().toString().equals("Date")){
-                        Toast toast3 =Toast.makeText(AddExpense.this,"Please select a date!",Toast.LENGTH_LONG);
+                        Toast toast3 =Toast.makeText(AddExpense.this,"Please select a date to continue!",Toast.LENGTH_LONG);
                         toast3.show();
                     }
                     else if(IsFuture(date)){
-                        Toast toast3 =Toast.makeText(AddExpense.this,"Future date not allowed! ",Toast.LENGTH_LONG);
+                        Toast toast3 =Toast.makeText(AddExpense.this,"Time machine is under maintenance, future dates not available! ",Toast.LENGTH_LONG);
                         toast3.show();
                     }
                     else if(txt_expense.getText().toString().equals("")){
-                        txt_expense.setError("Expense can't be blank!");
+                        txt_expense.setError("Expense field required!");
                     }
                     else{
                         double expense = Double.parseDouble(txt_expense.getText().toString());

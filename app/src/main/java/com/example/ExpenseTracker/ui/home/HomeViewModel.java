@@ -79,21 +79,13 @@ public class HomeViewModel extends AndroidViewModel {
                    {
                        userGoalsNdailyExpenses.put("DailyExpenseLimit", String.valueOf(NewDailyExpenseLimit));
                    }
-                     Toast.makeText(getApplication().getApplicationContext(),"Savings Nil.Hence, new Expense Limit of $"+NewDailyExpenseLimit +" is Set.", Toast.LENGTH_LONG);
+                     Toast.makeText(getApplication().getApplicationContext(),"You ran out of your annual savings !!!. New Expense Limit = $"+NewDailyExpenseLimit, Toast.LENGTH_LONG);
                  }
              }
          }
-
-            // homePageData.setValue("Annual Goals");
-            homePageData.setValue(userGoalsNdailyExpenses);
-            //Annual Status
+         homePageData.setValue(userGoalsNdailyExpenses);
 
     }
-
-
-
-
-
 
     public LiveData<HashMap<String,String>> getText() {
         return homePageData;

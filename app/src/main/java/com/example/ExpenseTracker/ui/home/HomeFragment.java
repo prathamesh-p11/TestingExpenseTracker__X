@@ -21,11 +21,6 @@ public class HomeFragment extends Fragment {
     String userName;
     DatabaseHelper databaseHelper;
    public static String username;
-
-
-
-
-
     private HomeViewModel homeViewModel;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
