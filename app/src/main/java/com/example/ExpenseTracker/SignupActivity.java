@@ -9,9 +9,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+import android.util.Patterns;
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.ValidationStyle;
 
-
-import java.util.regex.Pattern;
 
 public class SignupActivity extends AppCompatActivity {
     EditText UsernameEditText;
@@ -21,14 +22,17 @@ public class SignupActivity extends AppCompatActivity {
     EditText PhoneEditText;
     Button SignUpbutton;
     Context context;
+    private AwesomeValidation usernameValidation;
+    private AwesomeValidation passwordValidation;
+    private AwesomeValidation passwordReValidation;
+    private AwesomeValidation emailValidation;
+    private AwesomeValidation phoneValidation;
     DatabaseHelper databaseHelper;
     String UsernameValue;
-    String PwdValue;
     String RetypePassValue;
     String EmailValue;
     String PhoneValue;
-    Boolean flag_forgotPassword;
-
+    public SignupActivity activity = this;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,71 +45,50 @@ public class SignupActivity extends AppCompatActivity {
         PhoneEditText=findViewById(R.id.etPhone);
         SignUpbutton=findViewById(R.id.btnSignUp);
 
+        usernameValidation = new AwesomeValidation(ValidationStyle.BASIC);
+        passwordValidation = new AwesomeValidation(ValidationStyle.BASIC);
+        passwordReValidation = new AwesomeValidation(ValidationStyle.BASIC);
+        emailValidation = new AwesomeValidation(ValidationStyle.BASIC);
+        phoneValidation = new AwesomeValidation(ValidationStyle.BASIC);
         databaseHelper = new DatabaseHelper(this);
 
-        Intent intentFromLogin=getIntent();
-        if(intentFromLogin!=null)
-        {
-            flag_forgotPassword=intentFromLogin.getBooleanExtra("ForgotPassword",false);
-            if(flag_forgotPassword)
-            {
-                    EmailEditText.setVisibility(View.INVISIBLE);
-                    PhoneEditText.setVisibility(View.INVISIBLE);
-                    SignUpbutton.setText("Update password!");
-            }
-            else
-            {
-                EmailEditText.setVisibility(View.VISIBLE);
-                PhoneEditText.setVisibility(View.VISIBLE);
-                SignUpbutton.setText("Sign me up!");
-            }
-        }
-        else
-        {
-            EmailEditText.setVisibility(View.VISIBLE);
-            PhoneEditText.setVisibility(View.VISIBLE);
-            SignUpbutton.setText("Sign me up!");
-        }
+        PhoneEditText.setVisibility(View.VISIBLE);
+        SignUpbutton.setText("Sign me up!");
+        EmailEditText.setVisibility(View.VISIBLE);
+        addValidationToView();
 
-        //Validation of usernanme on tab
+        UsernameValue = UsernameEditText.getText().toString();
+        if(!IsUserNameUnique(UsernameValue))
+            UsernameEditText.setError("Username is already taken.");
+        /*
+            //Validation of usernanme on tab
         UsernameEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean focus) {
                 if(!focus)
                 {
                     //Check if the user name is already taken
-                   UsernameValue = UsernameEditText.getText().toString();
-
-                    if(!flag_forgotPassword)
+                    UsernameValue = UsernameEditText.getText().toString();
+                    if(!IsUserNameUnique(UsernameValue))
+                        UsernameEditText.setError("Username is already taken.");
+                    else
                     {
-                        if( !IsUserNameUnique(UsernameValue))
-                        {
-                            UsernameEditText.setError("Username is already taken.");
-                        }
-
-                    }
-                    else {
-                        if( IsUserNameUnique(UsernameValue))
-                        {
-                            UsernameEditText.setError("Incorrect username.");
-                        }
-
+                        if(!usernameValidation.validate())
+                            UsernameEditText.clearFocus();
                     }
 
                 }
             }
         });
-
-
+        
         //One capital letter, One number, One symbol, length 6 chars
         PasswordEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View view, boolean focus) {
                 if(!focus)
                 {
-                    PwdValue=PasswordEditText.getText().toString();
-                  if(!IsPasswordValid(PwdValue))
-                      PasswordEditText.setError("Must be min 4 chars with atleast one Capital letter, one Numeric , one Special Char ");
+                    if(!passwordValidation.validate())
+                        PasswordEditText.clearFocus();
                 }
             }
         });
@@ -115,11 +98,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean focus) {
                 if(!focus)
-                {
-                    RetypePassValue=RetypePassEditText.getText().toString();
-                    if(!HasPasswordMatched(RetypePassValue))
-                        RetypePassEditText.setError("Passwords do not match.");
-                }
+                    passwordReValidation.validate();
             }
         });
 
@@ -128,14 +107,7 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean focus) {
                 if(!focus)
-                {
-                    EmailValue=EmailEditText.getText().toString();
-
-                    if(!IsEmailValid(EmailValue))
-                    {
-                        EmailEditText.setError("Invalid email!");
-                    }
-                }
+                    emailValidation.validate();
             }
         });
 
@@ -144,17 +116,10 @@ public class SignupActivity extends AppCompatActivity {
             @Override
             public void onFocusChange(View view, boolean focus) {
                 if(!focus)
-                {
-                    PhoneValue=PhoneEditText.getText().toString();
-
-                    if(!IsPhoneValid(PhoneValue))
-                    {
-                        PhoneEditText.setError("Invalid phone number!");
-                    }
-                }
+                    phoneValidation.validate();
             }
         });
-
+        */
 
         // Validate every field and Store data in a Hashmap , then redirect to Login Page by appropriate toast msg. If invalid credentials, then display respective toast msg.
         SignUpbutton.setOnClickListener(new View.OnClickListener() {
@@ -163,96 +128,50 @@ public class SignupActivity extends AppCompatActivity {
 
                 RetypePassValue=RetypePassEditText.getText().toString();
                 UsernameValue=UsernameEditText.getText().toString();
-
-                if(!flag_forgotPassword) {
-                    PhoneValue = PhoneEditText.getText().toString();
-                    EmailValue = EmailEditText.getText().toString();
-
-                    if (IsEmailValid(EmailValue) && HasPasswordMatched(RetypePassValue) && IsUserNameUnique(UsernameValue) && IsPhoneValid(PhoneValue)) {
-                        ContentValues userContentValues = new ContentValues();
-                        userContentValues.put("user_name", UsernameValue);
-                        userContentValues.put("password", RetypePassValue);
-                        userContentValues.put("user_email", EmailValue);
-                        userContentValues.put("user_mobile", PhoneValue);
-                        userContentValues.put("isNewUser", 1);
-                        userContentValues.put("rememberMe", 0);
-                        userContentValues.put("isActive",0);
-
-                      if( databaseHelper.insertUser(userContentValues)) {
-
-                          Toast.makeText(context, "Registration successful", Toast.LENGTH_LONG).show();
-                          Intent LogIn = new Intent(context, LoginPageActivity.class);
-                          startActivity(LogIn);
-                      }
-                      else
-                      {
-                          //Toast.makeText(context, "Beep bop...something went wrong. ", Toast.LENGTH_LONG).show();
-
-                      }
-
-                    } else {
-                        Toast.makeText(context, "Invalid credentials, could not sign up", Toast.LENGTH_LONG).show();
-                    }
-                }
-                else
+                PhoneValue = PhoneEditText.getText().toString();
+                EmailValue = EmailEditText.getText().toString();
+                if (usernameValidation.validate() && emailValidation.validate() && passwordValidation.validate()
+                        && phoneValidation.validate() && passwordReValidation.validate() && IsUserNameUnique(UsernameValue))
                 {
+                    ContentValues userContentValues = new ContentValues();
+                    userContentValues.put("user_name", UsernameValue);
+                    userContentValues.put("password", RetypePassValue);
+                    userContentValues.put("user_email", EmailValue);
+                    userContentValues.put("user_mobile", PhoneValue);
+                    userContentValues.put("isNewUser", 1);
+                    userContentValues.put("rememberMe", 0);
+                    userContentValues.put("isActive",0);
 
-                    if(HasPasswordMatched(RetypePassValue) && !IsUserNameUnique(UsernameValue))
-                    {
-                        databaseHelper.UpdateUserPassword(databaseHelper.getUserId(UsernameValue),RetypePassValue);
-                        Toast.makeText(context, "Password has been updated! ", Toast.LENGTH_LONG).show();
+                    if( databaseHelper.insertUser(userContentValues)) {
+
+                        Toast.makeText(context, "Registration successful", Toast.LENGTH_LONG).show();
                         Intent LogIn = new Intent(context, LoginPageActivity.class);
                         startActivity(LogIn);
                     }
                     else
-                    {
-                        Toast.makeText(context, "Enter valid credentials.", Toast.LENGTH_LONG).show();
-                    }
+                        Toast.makeText(context, "Beep bop...something went wrong. ", Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                    Toast.makeText(context, "Invalid credentials, could not sign up", Toast.LENGTH_LONG).show();
                 }
             }
         });
-    }
-
-    //Check EmailPattern
-    boolean IsEmailValid(String email)
-    {
-        Pattern EmailFormat= Pattern.compile("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$");
-        return EmailFormat.matcher(email).find();
-
     }
     // Check if username is already taken
     boolean IsUserNameUnique(String username)
     {
         return databaseHelper.isUserUnique(username);
     }
-    // Check if passwords matched
-    boolean HasPasswordMatched(String Retypepwd)
-    {
-       return PasswordEditText.getText().toString().equals(Retypepwd);
-    }
-    //Check if the number has exactly 10 digits
-    boolean IsPhoneValid(String ph)
-    {
-        Pattern PhoneFormat=Pattern.compile("^\\d{10}$");
-        return PhoneFormat.matcher(ph).find();
 
-    }
-
-    /*
-  ^                 # start-of-string
-(?=.*[0-9])       # a digit must occur at least once
-(?=.*[a-z])       # a lower case letter must occur at least once
-(?=.*[A-Z])       # an upper case letter must occur at least once
-(?=.*[@#$%^&+=])  # a special character must occur at least once you can replace with your special characters
-(?=\\S+$)          # no whitespace allowed in the entire string
-.{4,}             # anything, at least six places though
-$                 # end-of-string
- */
-    boolean IsPasswordValid( String Pass)
+    private void addValidationToView()
     {
-        //Letters are considered as one category(be it small or Caps)==>"(?=.*[a-z])(?=.*[A-Z])" ->Hence min len must be 4
-        Pattern PasswordFormat= Pattern.compile(  "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$");
-        //return PasswordFormat.matcher(Pass).find();
-        return true;
+        //Regex from: https://stackoverflow.com/a/58771373
+        usernameValidation.addValidation(this, R.id.etUsername,"^(?=.{2,20}$)(?:[a-zA-Z\\d]+(?:(?:\\.|-|_)[a-zA-Z\\d])*)+$", R.string.invalid_name);
+        emailValidation.addValidation(this, R.id.etEmail, Patterns.EMAIL_ADDRESS, R.string.invalid_email);
+        String regexPassword = ".{4,}";
+        passwordValidation.addValidation(this, R.id.etSignupPassword, regexPassword, R.string.invalid_password);
+        passwordReValidation.addValidation(this, R.id.etRetypePass, R.id.etSignupPassword, R.string.invalid_confirm_password);
+        phoneValidation.addValidation(this, R.id.etPhone, "^[+]?[0-9]{10,13}$", R.string.invalid_phone);
     }
 }

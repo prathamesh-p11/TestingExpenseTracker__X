@@ -428,18 +428,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     }
 
-    public void UpdateUserPassword(int userId, String retypePassValue) {
-        try
-        {
-            String query="UPDATE user SET password='"+retypePassValue+"' WHERE user_id= "+userId;
-            getWritableDatabase().execSQL(query);
-        }
-        catch(SQLiteException e)
-        {
-            e.printStackTrace();
-        }
-    }
-
     public Cursor getUserGoals(int userId)
     {
         Cursor data=null;
